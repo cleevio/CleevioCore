@@ -17,7 +17,7 @@ public protocol ErrorHandlerType {
     func presentError(in controller: UIViewController?, withTitle title: String?, onDismiss: @escaping () -> Void)
 }
 
-@available(iOS 13.0, *)
+@available(iOS, introduced: 13.0, deprecated)
 open class BaseViewController<RootView: View>: UIHostingController<RootView>, PopHandler {
     @Published open var error: Error?
     @Published open var isLoading = false
@@ -86,33 +86,6 @@ open class BaseViewController<RootView: View>: UIHostingController<RootView>, Po
                 isLoading ? self?.loader.startLoading() : self?.loader.stopLoading()
             }
             .store(in: cancelBag)
-    }
-}
-
-@available(iOS 13.0, *)
-private extension BaseViewController {
-    func dchCheckDeallocation(afterDelay delay: TimeInterval = 2.0) {
-        let rootParentViewController = dchRootParentViewController
-        // We don't check `isBeingDismissed` simply on this view controller because it's common
-        // to wrap a view controller in another view controller (e.g. in UINavigationController)
-        // and present the wrapping view controller instead.
-        if isMovingFromParent || rootParentViewController.isBeingDismissed {
-            let typeOf = type(of: self)
-            let disappearanceSource: String = isMovingFromParent ? "removed from its parent" : "dismissed"
-            DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: { [weak self] in
-                assert(self == nil, "\(typeOf) not deallocated after being \(disappearanceSource)")
-            })
-        }
-    }
-}
-
-extension UIViewController {
-    fileprivate var dchRootParentViewController: UIViewController {
-        var root = self
-        while let parent = root.parent {
-            root = parent
-        }
-        return root
     }
 }
 
