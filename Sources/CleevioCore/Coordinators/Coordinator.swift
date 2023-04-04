@@ -16,7 +16,7 @@ public typealias PlatformViewController = NSViewController
 #endif
 
 /// The `CoordinatorEventDelegate` protocol defines a method that is called when a coordinator is deallocated.
-public protocol CoordinatorEventDelegate {
+public protocol CoordinatorEventDelegate: AnyObject {
     /// Notifies the delegate that the specified coordinator has been deallocated.
     ///
     /// - Parameter coordinator: The coordinator that has been deallocated.
@@ -38,7 +38,18 @@ open class Coordinator: CoordinatorEventDelegate {
         }
     }
 
+    private weak var delegate: CoordinatorEventDelegate?
+
     public init() { }
+
+    deinit {
+        delegate?.onDeinit(of: self)
+    }
+
+    /// Sets a delegate of type CoordinatorEventDelegate that is called when the coordinator is deallocated.
+    open func setDelegate(_ delegate: some CoordinatorEventDelegate) {
+        self.delegate = delegate
+    }
 
     /// Returns a child coordinator of the specified type.
     ///
