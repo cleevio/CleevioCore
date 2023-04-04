@@ -5,6 +5,7 @@
 //  Created by Lukáš Valenta on 31.03.2023.
 //
 
+#if os(iOS)
 import SwiftUI
 
 @available(iOS 13.0, *)
@@ -36,3 +37,4 @@ open class BaseUIHostingController<RootView: View>: UIHostingController<RootView
         #endif
     }
 }
+#endif

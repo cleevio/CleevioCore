@@ -5,6 +5,7 @@
 //  Created by Thành Đỗ Long on 12.01.2022.
 //
 
+#if os(iOS)
 import SwiftUI
 import Combine
 
@@ -191,3 +192,4 @@ public class ErrorHandler: ErrorHandlerType {
         }
     }
 }
+#endif
