@@ -5,6 +5,7 @@
 //  Created by Lukáš Valenta on 31.03.2023.
 //
 
+#if os(iOS)
 import UIKit
 
 @available(iOS 13.0, *)
@@ -65,4 +66,5 @@ extension UIViewController {
         return root
     }
 }
+#endif
 #endif

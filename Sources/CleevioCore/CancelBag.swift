@@ -8,7 +8,7 @@
 
 import Combine
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macOS 10.15, *)
 open class CancelBag {
     private var subscriptions = Cancellables()
 
@@ -35,8 +35,9 @@ open class CancelBag {
     }
 }
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macOS 10.15, *)
 public extension AnyCancellable {
+    @inlinable
     func store(in cancelBag: CancelBag) {
         cancelBag.register(subscription: self)
     }

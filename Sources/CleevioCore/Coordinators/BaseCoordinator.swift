@@ -11,18 +11,18 @@ import Foundation
 import Combine
 import SwiftUI
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macOS 10.15, *)
 public protocol PopHandler {
     var dismissPublisher: ActionSubject<Void> { get }
 }
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macOS 10.15, *)
 public protocol DismissHandler {
     var dismissPublisher: ActionSubject<Void> { get }
 }
 
 /// Base abstract coordinator generic over the return type of the `start` method.
-@available(iOS 13.0, *)
+@available(iOS 13.0, macOS 10.15, *)
 open class BaseCoordinator<ResultType>: NSObject, Coordinator {
 
     /// Typealias which will allows to access a ResultType of the Coordainator by `CoordinatorName.CoordinationResult`.
