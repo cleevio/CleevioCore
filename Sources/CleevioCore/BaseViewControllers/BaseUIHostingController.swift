@@ -9,9 +9,9 @@
 import SwiftUI
 
 @available(iOS 13.0, *)
-open class BaseUIHostingController<RootView: View>: UIHostingController<RootView>, PopHandler {
-    public let dismissPublisher: ActionSubject<Void> = .init()
-
+open class BaseUIHostingController<RootView: View>: UIHostingController<RootView>, DismissHandler {
+    public var dismissPublisher: ActionSubject<Void> = .init()
+    
     public override init(rootView: RootView) {
         super.init(rootView: rootView)
     }

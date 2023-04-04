@@ -9,8 +9,8 @@
 import UIKit
 
 @available(iOS 13.0, *)
-open class BaseUIViewController: UIViewController, PopHandler {
-    public let dismissPublisher: ActionSubject<Void> = .init()
+open class BaseUIViewController: UIViewController, DismissHandler {
+    public var dismissPublisher: ActionSubject<Void> = .init()
 
     open override func didMove(toParent parent: UIViewController?) {
         super.didMove(toParent: parent)
@@ -26,7 +26,7 @@ open class BaseUIViewController: UIViewController, PopHandler {
 }
 
 @available(iOS 13.0, *)
-extension PopHandler where Self: UIViewController {
+extension DismissHandler where Self: UIViewController {
     func dismissIfNeeded(parent: UIViewController?) {
         if parent == nil {
             dismissPublisher.send()

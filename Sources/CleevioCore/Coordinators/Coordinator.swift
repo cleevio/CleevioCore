@@ -7,6 +7,14 @@
 
 import Foundation
 
+#if os(iOS)
+import UIKit
+public typealias PlatformViewController = UIViewController
+#elseif os(macOS)
+import AppKit
+public typealias PlatformViewController = NSViewController
+#endif
+
 /// The `CoordinatorEventDelegate` protocol defines a method that is called when a coordinator is deallocated.
 public protocol CoordinatorEventDelegate {
     /// Notifies the delegate that the specified coordinator has been deallocated.
@@ -19,6 +27,16 @@ public protocol CoordinatorEventDelegate {
 open class Coordinator: CoordinatorEventDelegate {
     /// Dictionary that stores the child coordinators.
     public final var childCoordinators: [HashableType<Coordinator>: Coordinator] = [:]
+
+    private var id = UUID()
+
+    /// The view controller that this coordinator manages. Lifetime of this Coordinator is tied on lifetime of the ViewController.
+    public final weak var viewController: PlatformViewController? {
+        willSet {
+            guard let newValue else { return }
+            setAssociatedObject(base: newValue, key: &id, value: self)
+        }
+    }
 
     /// Returns a child coordinator of the specified type.
     ///
