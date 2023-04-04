@@ -1,18 +1,56 @@
 //
 //  Coordinator.swift
-//  CleevioUIExample
 //
-//  Created by Thành Đỗ Long on 14.01.2022.
-//  Copyright © 2022 CocoaPods. All rights reserved.
+//
+//  Created by Lukáš Valenta on 31.03.2023.
 //
 
 import Foundation
 
-@available(iOS 13.0, macOS 10.15, *)
-public protocol Coordinator {
-    associatedtype CoordinationResult
+/// The `CoordinatorEventDelegate` protocol defines a method that is called when a coordinator is deallocated.
+public protocol CoordinatorEventDelegate {
+    /// Notifies the delegate that the specified coordinator has been deallocated.
+    ///
+    /// - Parameter coordinator: The coordinator that has been deallocated.
+    func onDeinit(of coordinator: Coordinator)
+}
 
-    var identifier: UUID { get }
+/// The `Coordinator` class is a base class for coordinator objects. It provides methods for managing child coordinators.
+open class Coordinator: CoordinatorEventDelegate {
+    /// Dictionary that stores the child coordinators.
+    public final var childCoordinators: [HashableType<Coordinator>: Coordinator] = [:]
 
-    func start() -> CoordinatingResult<CoordinationResult>
+    /// Returns a child coordinator of the specified type.
+    ///
+    /// - Parameter type: The type of the child coordinator to return.
+    /// - Returns: The child coordinator of the specified type, or `nil` if it doesn't exist.
+    @inlinable
+    public final func childCoordinator<T: Coordinator>(of type: T.Type = T.self) -> T? {
+        return childCoordinators[type] as? T
+    }
+
+    /// Removes the child coordinator of the specified type.
+    ///
+    /// - Parameter type: The type of the child coordinator to remove.
+    @inlinable
+    public final func removeChildCoordinator<T: Coordinator>(of type: T.Type = T.self) {
+        childCoordinators[type] = nil
+    }
+
+    /// Removes the specified child coordinator.
+    ///
+    /// - Parameter coordinator: The child coordinator to remove.
+    @inlinable
+    public final func removeChildCoordinator(_ coordinator: some Coordinator) {
+        removeChildCoordinator(of: type(of: coordinator))
+    }
+
+    /// Starts the coordinator. Subclasses must provide an implementation of this method.
+    open func start() {
+        fatalError("Implementation of start is required")
+    }
+
+    open func onDeinit(of coordinator: Coordinator) {
+        removeChildCoordinator(coordinator)
+    }
 }
