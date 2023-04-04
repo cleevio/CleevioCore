@@ -38,6 +38,8 @@ open class Coordinator: CoordinatorEventDelegate {
         }
     }
 
+    public init() { }
+
     /// Returns a child coordinator of the specified type.
     ///
     /// - Parameter type: The type of the child coordinator to return.
