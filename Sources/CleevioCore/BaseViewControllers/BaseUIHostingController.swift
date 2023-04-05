@@ -24,11 +24,6 @@ open class BaseUIHostingController<RootView: View>: UIHostingController<RootView
         super.didMove(toParent: parent)
         dismissIfNeeded(parent: parent)
     }
-    
-    open override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .clear
-    }
 
     open override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
