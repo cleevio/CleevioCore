@@ -40,7 +40,9 @@ open class Coordinator: CoordinatorEventDelegate {
 
     private weak var delegate: CoordinatorEventDelegate?
 
-    public init() { }
+    public init(delegate: CoordinatorEventDelegate? = nil) {
+        self.delegate = delegate
+    }
 
     deinit {
         delegate?.onDeinit(of: self)
