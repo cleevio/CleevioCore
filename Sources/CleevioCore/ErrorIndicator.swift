@@ -12,7 +12,7 @@ import Combine
  Enables monitoring error of sequence computation.
  */
 @available(iOS 13.0, macOS 10.15, *)
-open class ErrorIndicator {
+open class ErrorIndicator: @unchecked Sendable {
     private struct ActivityToken<Source: Publisher> {
         let source: Source
         let errorAction: (Source.Failure) -> Void

@@ -14,7 +14,7 @@ import Combine
  If there is at least one sequence computation in progress, `true` will be sent.
  When all activities complete `false` will be sent.
  */
-open class ActivityIndicator {
+open class ActivityIndicator: @unchecked Sendable {
     private struct ActivityToken<Source: Publisher> {
         let source: Source
         let beginAction: () -> Void
@@ -41,6 +41,7 @@ open class ActivityIndicator {
             .eraseToAnyPublisher()
     }
 
+    @inlinable
     public init() {}
 
     open func trackActivityOfPublisher<Source: Publisher>(source: Source) -> AnyPublisher<Source.Output, Source.Failure> {

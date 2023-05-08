@@ -8,23 +8,26 @@
 import Foundation
 
 /// A `HashableType` is a hashable wrapper for a metatype value.
-public struct HashableType<T> {
+public struct HashableType<T>: Sendable {
     /// The base type for the `HashableType` wrapper.
     public let base: T.Type
     
     /// Creates a new `HashableType` wrapper with the specified base type.
     ///
     /// - Parameter base: The base type for the `HashableType` wrapper.
+    @inlinable
     public init(_ base: T.Type) {
         self.base = base
     }
 }
 
 extension HashableType: Hashable {
+    @inlinable
     public static func == (lhs: HashableType, rhs: HashableType) -> Bool {
         return lhs.base == rhs.base
     }
     
+    @inlinable
     public func hash(into hasher: inout Hasher) {
         hasher.combine(ObjectIdentifier(base))
     }
@@ -35,6 +38,7 @@ public extension Dictionary {
     ///
     /// - Parameter key: The type of the key.
     /// - Returns: The value associated with `key`, or `nil` if `key` is not in the dictionary.
+    @inlinable
     subscript<T>(key: T.Type) -> Value? where Key == HashableType<T> {
         get { return self[HashableType(key)] }
         set { self[HashableType(key)] = newValue }

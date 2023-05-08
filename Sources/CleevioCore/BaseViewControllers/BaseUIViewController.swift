@@ -9,6 +9,7 @@
 import UIKit
 
 @available(iOS 13.0, *)
+@MainActor
 open class BaseUIViewController: UIViewController, DismissHandler {
     public var dismissPublisher: ActionSubject<Void> = .init()
 
@@ -27,6 +28,7 @@ open class BaseUIViewController: UIViewController, DismissHandler {
 
 @available(iOS 13.0, *)
 extension DismissHandler where Self: UIViewController {
+    @MainActor
     func dismissIfNeeded(parent: UIViewController?) {
         if parent == nil {
             dismissPublisher.send()
@@ -38,6 +40,7 @@ extension DismissHandler where Self: UIViewController {
 #if DEBUG
 @available(iOS 13.0, *)
 extension UIViewController {
+    @MainActor
     public func dchCheckDeallocation(afterDelay delay: TimeInterval = 2.0) {
         let rootParentViewController = dchRootParentViewController
 

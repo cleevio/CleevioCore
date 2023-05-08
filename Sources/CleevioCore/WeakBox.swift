@@ -14,7 +14,7 @@ import Foundation
 public final class WeakBox<Object: AnyObject> {
     
     /// The weakly-held object.
-    public weak var unbox: Object?
+    private(set) public weak var unbox: Object?
     
     /**
      Initializes a new instance of `WeakBox` with the given object.
@@ -37,19 +37,23 @@ public final class WeakBox<Object: AnyObject> {
     }
 }
 
+extension WeakBox: Sendable where Object: Sendable { }
+
 /**
  An array-like collection that holds weak references to objects of type `Element`.
  */
 public struct WeakArray<Element: AnyObject> {
     
     /// The items in the array.
-    private var items: [WeakBox<Element>] = []
+    @usableFromInline
+    var items: [WeakBox<Element>] = []
     
     /**
      Initializes a new instance of `WeakArray` with the given elements.
      
      - Parameter elements: The elements to store in the array.
      */
+    @inlinable
     public init(_ elements: [Element]) {
         items = elements.map(WeakBox.init)
     }
@@ -57,6 +61,7 @@ public struct WeakArray<Element: AnyObject> {
     /**
      Initializes a new, empty instance of `WeakArray`.
      */
+    @inlinable
     public init() {}
 }
 
@@ -74,6 +79,7 @@ extension WeakArray: Collection {
      - Parameter index: The index of the desired item.
      - Returns: The item at the given index, if it exists, otherwise `nil`.
      */
+    @inlinable
     public subscript(_ index: Int) -> Element? {
         return items[index].unbox
     }
@@ -84,6 +90,7 @@ extension WeakArray: Collection {
      - Parameter idx: The index to advance.
      - Returns: The index one past the given index.
      */
+    @inlinable
     public func index(after idx: Int) -> Int {
         return items.index(after: idx)
     }
@@ -93,6 +100,7 @@ extension WeakArray: Collection {
      
      - Parameter element: The element to append.
      */
+    @inlinable
     public mutating func append(_ element: Element) {
         items.append(WeakBox(element))
     }
@@ -100,6 +108,7 @@ extension WeakArray: Collection {
     /**
      Removes all elements from the array.
      */
+    @inlinable
     public mutating func removeAll() {
         items.removeAll()
     }

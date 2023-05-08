@@ -12,6 +12,7 @@ import Combine
 open class CancelBag {
     private var subscriptions = Cancellables()
 
+    @inlinable
     public init() {}
 
     open func cancel() {

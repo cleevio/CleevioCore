@@ -9,7 +9,7 @@ import Foundation
 
 @available(iOS 13.0, macOS 10.15, *)
 public protocol DismissHandler {
-    var dismissPublisher: ActionSubject<Void> { get }
+    @MainActor var dismissPublisher: ActionSubject<Void> { get }
 }
 
 @available(iOS 13.0, macOS 10.15, *)

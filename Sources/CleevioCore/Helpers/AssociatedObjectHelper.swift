@@ -8,11 +8,13 @@
 import Foundation
 
 /// Set associated object to object. Its useful on storing values in extensions.
+@inlinable
 public func setAssociatedObject<ValueType, Object, PointerType>(base: Object, key: UnsafePointer<PointerType>, value: ValueType?) {
     objc_setAssociatedObject(base, key, value, .OBJC_ASSOCIATION_RETAIN)
 }
 
 /// Remove associated object from object.
+@inlinable
 public func removeAllAssociatedObjects<Object>(base: Object) {
     objc_removeAssociatedObjects(base)
 }

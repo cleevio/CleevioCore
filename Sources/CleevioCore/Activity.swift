@@ -9,10 +9,11 @@ import Foundation
 import Combine
 
 @available(iOS 13.0, macOS 10.15, *)
-public struct Activity {
+public struct Activity: Sendable {
     public let indicator: ActivityIndicator
     public let error: ErrorIndicator
 
+    @inlinable
     public init(indicator: ActivityIndicator? = nil, error: ErrorIndicator? = nil) {
         self.indicator = indicator ?? .init()
         self.error = error ?? .init()

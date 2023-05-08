@@ -3,6 +3,12 @@
 
 import PackageDescription
 
+let swiftSettings = [SwiftSetting.unsafeFlags([
+    "-Xfrontend", "-strict-concurrency=complete",
+    "-Xfrontend", "-warn-concurrency",
+    "-Xfrontend", "-enable-actor-data-race-checks",
+])]
+
 let package = Package(
     name: "CleevioCore",
     products: [
@@ -14,9 +20,13 @@ let package = Package(
     targets: [
         .target(
             name: "CleevioCore",
-            dependencies: []),
+            dependencies: [],
+            swiftSettings: swiftSettings
+        ),
         .testTarget(
             name: "CleevioCoreTests",
-            dependencies: ["CleevioCore"]),
+            dependencies: ["CleevioCore"],
+            swiftSettings: swiftSettings
+        )
     ]
 )

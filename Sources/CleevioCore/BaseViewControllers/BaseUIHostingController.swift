@@ -9,6 +9,7 @@
 import SwiftUI
 
 @available(iOS 13.0, *)
+@MainActor
 open class BaseUIHostingController<RootView: View>: UIHostingController<RootView>, DismissHandler {
     public var dismissPublisher: ActionSubject<Void> = .init()
     
