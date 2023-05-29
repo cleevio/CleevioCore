@@ -37,7 +37,7 @@ public final class WeakBox<Object: AnyObject> {
     }
 }
 
-extension WeakBox: Sendable where Object: Sendable { }
+extension WeakBox: @unchecked Sendable where Object: Sendable { }
 
 /**
  An array-like collection that holds weak references to objects of type `Element`.
@@ -68,9 +68,11 @@ public struct WeakArray<Element: AnyObject> {
 extension WeakArray: Collection {
     
     /// The index of the first item in the array.
+    @inlinable
     public var startIndex: Int { return items.startIndex }
     
     /// The index one past the last item in the array.
+    @inlinable
     public var endIndex: Int { return items.endIndex }
     
     /**

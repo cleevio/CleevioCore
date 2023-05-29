@@ -3,11 +3,14 @@
 
 import PackageDescription
 
-let swiftSettings = [SwiftSetting.unsafeFlags([
-    "-Xfrontend", "-strict-concurrency=complete",
-    "-Xfrontend", "-warn-concurrency",
-    "-Xfrontend", "-enable-actor-data-race-checks",
-])]
+let swiftSettings: [SwiftSetting] = [
+    // Use for development to catch concurrency issues. SPM packages cannot depend on other packages that use unsafeFlags.
+//    SwiftSetting.unsafeFlags([
+//        "-Xfrontend", "-strict-concurrency=complete",
+//        "-Xfrontend", "-warn-concurrency",
+//        "-Xfrontend", "-enable-actor-data-race-checks",
+//    ])
+]
 
 let package = Package(
     name: "CleevioCore",
