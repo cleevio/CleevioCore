@@ -7,25 +7,38 @@
 //
 
 import Combine
+import Foundation
 
 @available(iOS 13.0, macOS 10.15, *)
 open class CancelBag {
-    private var subscriptions = Cancellables()
+    @usableFromInline
+    var subscriptions = Cancellables()
+    @usableFromInline
+    let lock = NSLock()
 
     @inlinable
     public init() {}
 
+    @inlinable
     open func cancel() {
-        subscriptions.forEach { $0.cancel() }
-        subscriptions.removeAll()
+        withLock {
+            subscriptions.forEach { $0.cancel() }
+            subscriptions.removeAll()
+        }
     }
 
+    @inlinable
     open func collect(@Builder _ cancellables: () -> [AnyCancellable]) {
-        subscriptions.formUnion(cancellables())
+        withLock {
+            subscriptions.formUnion(cancellables())
+        }
     }
 
+    @inlinable
     open func register(subscription: AnyCancellable) {
-        subscriptions.insert(subscription)
+        withLock {
+            subscriptions.insert(subscription)
+        }
     }
 
     @resultBuilder
@@ -33,6 +46,17 @@ open class CancelBag {
         public static func buildBlock(_ cancellables: AnyCancellable...) -> [AnyCancellable] {
             return cancellables
         }
+    }
+
+    @inlinable
+    func withLock(_ action: () -> Void) {
+        lock.lock()
+
+        defer {
+            lock.unlock()
+        }
+
+        action()
     }
 }
 
