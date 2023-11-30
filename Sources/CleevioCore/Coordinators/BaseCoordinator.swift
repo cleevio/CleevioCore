@@ -43,7 +43,7 @@ open class BaseCoordinator<ResultType>: NSObject, Coordinator {
     /// to that dictionary in order to keep it in memory.
     /// Key is an `identifier` of the child coordinator and value is the coordinator itself.
     /// Value type is `Any` because Swift doesn't allow to store generic types in the array.
-    private var childCoordinators = [UUID: Any]()
+    private(set) var childCoordinators = [UUID: Any]()
 
     /// Stores coordinator to the `childCoordinators` dictionary.
     ///
