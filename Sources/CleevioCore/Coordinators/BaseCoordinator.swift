@@ -39,6 +39,10 @@ open class BaseCoordinator<ResultType>: NSObject, Coordinator {
         !childCoordinators.isEmpty
     }
 
+    public func childCoordinator<T: Coordinator>(_ id: UUID) -> T? {
+        childCoordinators[id] as? T
+    }
+
     /// Dictionary of the child coordinators. Every child coordinator should be added
     /// to that dictionary in order to keep it in memory.
     /// Key is an `identifier` of the child coordinator and value is the coordinator itself.
