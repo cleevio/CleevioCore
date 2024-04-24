@@ -1,6 +1,6 @@
 import Foundation
 
-public struct AppVersion: Comparable, CustomStringConvertible {
+public struct AppVersion: Comparable, CustomStringConvertible, Sendable {
     public var major: Int
     public var minor: Int
     public var patch: Int
