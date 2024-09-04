@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-@available(iOS 13.0, macOS 10.15, *)
+@available(iOS 13.0, macOS 10.15, watchOS 6.0, *)
 public protocol ViewModelType: ObservableObject {
     associatedtype ActionType
     associatedtype RouteType
@@ -20,7 +20,7 @@ public protocol ViewModelType: ObservableObject {
     var primaryActivity: Activity { get }
 }
 
-@available(iOS 13.0, macOS 10.15, *)
+@available(iOS 13.0, macOS 10.15, watchOS 6.0, *)
 public extension ViewModelType {
     func send(action: ActionType) -> Void {
         self.action.send(action)

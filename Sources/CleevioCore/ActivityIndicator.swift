@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-@available(iOS 13.0, macOS 10.15, *)
+@available(iOS 13.0, macOS 10.15, watchOS 6.0, *)
 /**
  Enables monitoring of sequence computation.
  If there is at least one sequence computation in progress, `true` will be sent.
@@ -66,7 +66,7 @@ open class ActivityIndicator: @unchecked Sendable {
     }
 }
 
-@available(iOS 13.0, macOS 10.15, *)
+@available(iOS 13.0, macOS 10.15, watchOS 6.0, *)
 public extension Publisher {
     func trackActivity(_ activityIndicator: ActivityIndicator) -> AnyPublisher<Self.Output, Self.Failure> {
         activityIndicator.trackActivityOfPublisher(source: self)

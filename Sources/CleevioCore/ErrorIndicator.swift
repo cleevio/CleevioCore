@@ -11,7 +11,7 @@ import Combine
 /**
  Enables monitoring error of sequence computation.
  */
-@available(iOS 13.0, macOS 10.15, *)
+@available(iOS 13.0, macOS 10.15, watchOS 6.0, *)
 open class ErrorIndicator: @unchecked Sendable {
     private struct ActivityToken<Source: Publisher> {
         let source: Source
@@ -49,7 +49,7 @@ open class ErrorIndicator: @unchecked Sendable {
     }
 }
 
-@available(iOS 13.0, macOS 10.15, *)
+@available(iOS 13.0, macOS 10.15, watchOS 6.0, *)
 public extension Publisher {
     func trackError(_ errorIndicator: ErrorIndicator) -> AnyPublisher<Self.Output, Never> {
         errorIndicator.trackErrorOfPublisher(source: self)

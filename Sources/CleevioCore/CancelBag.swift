@@ -9,7 +9,7 @@
 import Combine
 import Foundation
 
-@available(iOS 13.0, macOS 10.15, *)
+@available(iOS 13.0, macOS 10.15, watchOS 6.0, *)
 open class CancelBag {
     @usableFromInline
     var subscriptions = Cancellables()
@@ -60,7 +60,7 @@ open class CancelBag {
     }
 }
 
-@available(iOS 13.0, macOS 10.15, *)
+@available(iOS 13.0, macOS 10.15, watchOS 6.0, *)
 public extension AnyCancellable {
     @inlinable
     func store(in cancelBag: CancelBag) {
